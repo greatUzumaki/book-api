@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"test-api/pkg/common/config"
 	"test-api/pkg/common/db"
@@ -12,7 +13,7 @@ import (
 func init() {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Println("Error loading .env file")
 	}
 }
 
@@ -20,12 +21,14 @@ func main() {
 	c := config.GetConfig() // Подлкючение конфига для получения переменных из .env
 
 	r := gin.Default()
-	db.Init(c.DbUrl)
+
+	dbUrl := fmt.Sprintf("postgres://%s:%s@%s:%s/%s", c.DbLogin, c.DbPassword, c.DbHost, c.DbPort, c.DbName)
+	db.Init(dbUrl)
 
 	r.GET("/", func(ctx *gin.Context) {
 		ctx.JSON(200, gin.H{
 			"port":  c.Port,
-			"dbUrl": c.DbUrl,
+			"dbUrl": c.DbHost,
 		})
 	})
 

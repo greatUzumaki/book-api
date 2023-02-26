@@ -6,24 +6,27 @@ FROM golang:alpine AS builder
 ENV CGO_ENABLED 0
 ENV GOOS linux
 
-WORKDIR /app
+WORKDIR /build
 
-COPY go.mod .
-COPY go.sum .
+COPY go.mod go.sum ./
 
 RUN go mod download
 
 COPY . .
 
-RUN go build -ldflags="-s -w" -o /app/hello . /hello.go
+RUN go build -ldflags="-s -w" -o server cmd/server/main.go
 
 # Деплой
-FROM scratch AS deploy
+FROM scratch AS runner
 
-WORKDIR /
+WORKDIR /app
 
-COPY --from=builder /godocker /godocker
+ENV DB_HOST=postgres_container
+ENV GIN_MODE=release
+
+COPY --from=builder /build/.env .
+COPY --from=builder /build/server .
 
 EXPOSE 8080
 
-ENTRYPOINT ["/godocker"]
+ENTRYPOINT ["./server"]

@@ -1,6 +1,19 @@
 version: '3.5'
 
 services:
+  api:
+    container_name: api_container
+    build: .
+    restart: always
+    volumes:
+      - .:/app
+    ports:
+      - '8001:8001'
+    networks:
+      - postgres
+    depends_on:
+      - postgres
+
   postgres:
     container_name: postgres_container
     image: postgres
