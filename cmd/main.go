@@ -1,28 +1,33 @@
 package main
 
 import (
+	"log"
+	"test-api/pkg/common/config"
 	"test-api/pkg/common/db"
 
 	"github.com/gin-gonic/gin"
-	"github.com/spf13/viper"
+	"github.com/joho/godotenv"
 )
 
-func main() {
-	viper.SetConfigFile("./pkg/common/envs/.env")
-	viper.ReadInConfig()
+func init() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+}
 
-	port := viper.Get("PORT").(string)
-	dbUrl := viper.Get("DB_URL").(string)
+func main() {
+	c := config.GetConfig() // Подлкючение конфига для получения переменных из .env
 
 	r := gin.Default()
-	db.Init(dbUrl)
+	db.Init(c.DbUrl)
 
 	r.GET("/", func(ctx *gin.Context) {
 		ctx.JSON(200, gin.H{
-			"port":  port,
-			"dbUrl": dbUrl,
+			"port":  c.Port,
+			"dbUrl": c.DbUrl,
 		})
 	})
 
-	r.Run(port)
+	r.Run(c.Port)
 }
