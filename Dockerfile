@@ -31,7 +31,7 @@ ENV DB_PORT=5432
 ENV GIN_MODE=release
 
 COPY --from=builder /build/.env /
-COPY --from=builder /build/cmd/server/docs /
+COPY --from=builder /build/docs /
 COPY --from=builder /build/server /server
 
 EXPOSE $PORT

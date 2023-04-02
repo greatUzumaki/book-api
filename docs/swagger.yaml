@@ -1,0 +1,83 @@
+basePath: /api/v1
+definitions:
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+  test-api_pkg_common_models.Book:
+    properties:
+      author:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      description:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+host: localhost:8001
+info:
+  contact: {}
+  description: Simple API GO + Gin
+  title: Book API
+  version: "1.0"
+paths:
+  /:
+    get:
+      consumes:
+      - '*/*'
+      description: get the status of server.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Show the status of server.
+      tags:
+      - root
+  /books:
+    get:
+      operationId: get-books
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/test-api_pkg_common_models.Book'
+      summary: Get all books
+  /books/{id}:
+    get:
+      operationId: get-book-by-id
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/test-api_pkg_common_models.Book'
+        "404":
+          description: Not found
+          schema:
+            type: string
+      summary: Get book by ID
+swagger: "2.0"
