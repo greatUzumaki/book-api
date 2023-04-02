@@ -13,6 +13,17 @@ type UpdateBookRequestBody struct {
 	Description string `json:"description"`
 }
 
+//	@Summary	Update book by ID
+//	@ID			update-book-by-id
+//	@Tags		books
+//	@Accept		json
+//	@Produce	json
+//	@Param		id		path		int						true	"Book ID"
+//	@Param		data	body		UpdateBookRequestBody	true	"Book data"
+//	@Success	200		{object}	models.Book
+//	@Failure	404		{string}	string	"Not found"
+//	@Failure	400		{string}	string	"Bad Request"
+//	@Router		/books/{id} [put]
 func (h handler) UpdateBook(c *gin.Context) {
 	id := c.Param("id")
 

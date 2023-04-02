@@ -26,10 +26,10 @@ func init() {
 
 //	@title			Book API
 //	@version		1.0
-//	@description	Simple API GO + Gin
+//	@description	Simple Book API GO + Gin
 
-// @host		localhost:8001
-// @BasePath	/api/v1
+//	@host		localhost:8001
+//	@BasePath	/api/v1
 func main() {
 	c := config.GetConfig() // Подлкючение конфига для получения переменных из .env
 
@@ -54,13 +54,13 @@ func main() {
 	r.Run(port)
 }
 
-// @Summary     Show the status of server.
-// @Description get the status of server.
-// @Tags        root
-// @Accept      */*
-// @Produce     json
-// @Success     200 {object} map[string]interface{}
-// @Router      / [get]
+//	@Summary		Show the status of server.
+//	@Description	get the status of server.
+//	@Tags			root
+//	@Accept			*/*
+//	@Produce		json
+//	@Success		200	{object}	map[string]interface{}
+//	@Router			/ [get]
 func HealthCheck(c *gin.Context) {
 	res := map[string]interface{}{
 		"data": "Server is up and running",

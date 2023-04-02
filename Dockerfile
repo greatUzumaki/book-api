@@ -11,8 +11,11 @@ WORKDIR /build
 COPY go.mod go.sum ./
 
 RUN go mod download
+RUN apk update && apk add make
 
 COPY . .
+
+CMD ["make", "docgen"]
 
 RUN go build -ldflags="-s -w" -o server cmd/server/main.go
 

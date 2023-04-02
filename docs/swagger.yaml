@@ -28,7 +28,7 @@ definitions:
 host: localhost:8001
 info:
   contact: {}
-  description: Simple API GO + Gin
+  description: Simple Book API GO + Gin
   title: Book API
   version: "1.0"
 paths:
@@ -59,7 +59,54 @@ paths:
           schema:
             $ref: '#/definitions/test-api_pkg_common_models.Book'
       summary: Get all books
+    post:
+      consumes:
+      - application/json
+      operationId: add-book
+      parameters:
+      - description: Book data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/test-api_pkg_common_models.Book'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/test-api_pkg_common_models.Book'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not found
+          schema:
+            type: string
+      summary: Add new book
   /books/{id}:
+    delete:
+      operationId: delete-book-by-id
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/test-api_pkg_common_models.Book'
+        "404":
+          description: Not found
+          schema:
+            type: string
+      summary: Delete a book by ID
     get:
       operationId: get-book-by-id
       parameters:
@@ -80,4 +127,36 @@ paths:
           schema:
             type: string
       summary: Get book by ID
+    put:
+      consumes:
+      - application/json
+      operationId: update-book-by-id
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Book data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/test-api_pkg_common_models.Book'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/test-api_pkg_common_models.Book'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not found
+          schema:
+            type: string
+      summary: Update book by ID
 swagger: "2.0"
