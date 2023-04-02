@@ -8,6 +8,24 @@ definitions:
         description: Valid is true if Time is not NULL
         type: boolean
     type: object
+  pkg_books.AddBookRequestBody:
+    properties:
+      author:
+        type: string
+      description:
+        type: string
+      title:
+        type: string
+    type: object
+  pkg_books.UpdateBookRequestBody:
+    properties:
+      author:
+        type: string
+      description:
+        type: string
+      title:
+        type: string
+    type: object
   test-api_pkg_common_models.Book:
     properties:
       author:
@@ -57,8 +75,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/test-api_pkg_common_models.Book'
+            items:
+              $ref: '#/definitions/test-api_pkg_common_models.Book'
+            type: array
       summary: Get all books
+      tags:
+      - books
     post:
       consumes:
       - application/json
@@ -69,7 +91,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/test-api_pkg_common_models.Book'
+          $ref: '#/definitions/pkg_books.AddBookRequestBody'
       produces:
       - application/json
       responses:
@@ -86,6 +108,8 @@ paths:
           schema:
             type: string
       summary: Add new book
+      tags:
+      - books
   /books/{id}:
     delete:
       operationId: delete-book-by-id
@@ -107,6 +131,8 @@ paths:
           schema:
             type: string
       summary: Delete a book by ID
+      tags:
+      - books
     get:
       operationId: get-book-by-id
       parameters:
@@ -127,6 +153,8 @@ paths:
           schema:
             type: string
       summary: Get book by ID
+      tags:
+      - books
     put:
       consumes:
       - application/json
@@ -142,7 +170,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/test-api_pkg_common_models.Book'
+          $ref: '#/definitions/pkg_books.UpdateBookRequestBody'
       produces:
       - application/json
       responses:
@@ -159,4 +187,6 @@ paths:
           schema:
             type: string
       summary: Update book by ID
+      tags:
+      - books
 swagger: "2.0"

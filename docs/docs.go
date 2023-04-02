@@ -45,13 +45,19 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "books"
+                ],
                 "summary": "Get all books",
                 "operationId": "get-books",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/test-api_pkg_common_models.Book"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/test-api_pkg_common_models.Book"
+                            }
                         }
                     }
                 }
@@ -63,6 +69,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "books"
+                ],
                 "summary": "Add new book",
                 "operationId": "add-book",
                 "parameters": [
@@ -72,7 +81,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/test-api_pkg_common_models.Book"
+                            "$ref": "#/definitions/pkg_books.AddBookRequestBody"
                         }
                     }
                 ],
@@ -102,6 +111,9 @@ const docTemplate = `{
             "get": {
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "books"
                 ],
                 "summary": "Get book by ID",
                 "operationId": "get-book-by-id",
@@ -136,6 +148,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "books"
+                ],
                 "summary": "Update book by ID",
                 "operationId": "update-book-by-id",
                 "parameters": [
@@ -152,7 +167,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/test-api_pkg_common_models.Book"
+                            "$ref": "#/definitions/pkg_books.UpdateBookRequestBody"
                         }
                     }
                 ],
@@ -180,6 +195,9 @@ const docTemplate = `{
             "delete": {
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "books"
                 ],
                 "summary": "Delete a book by ID",
                 "operationId": "delete-book-by-id",
@@ -219,6 +237,34 @@ const docTemplate = `{
                 "valid": {
                     "description": "Valid is true if Time is not NULL",
                     "type": "boolean"
+                }
+            }
+        },
+        "pkg_books.AddBookRequestBody": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "pkg_books.UpdateBookRequestBody": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
                 }
             }
         },
