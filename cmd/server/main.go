@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"test-api/pkg/books"
 	"test-api/pkg/common/config"
 	"test-api/pkg/common/db"
 
@@ -23,7 +24,8 @@ func main() {
 	r := gin.Default()
 
 	dbUrl := fmt.Sprintf("postgres://%s:%s@%s:%s/%s", c.DbLogin, c.DbPassword, c.DbHost, c.DbPort, c.DbName)
-	db.Init(dbUrl)
+	fmt.Println(dbUrl)
+	h := db.Init(dbUrl)
 
 	r.GET("/", func(ctx *gin.Context) {
 		ctx.JSON(200, gin.H{
@@ -32,5 +34,10 @@ func main() {
 		})
 	})
 
-	r.Run(c.Port)
+	books.RegisterRoutes(r, h)
+
+	port := fmt.Sprintf(":%s", c.Port)
+	fmt.Println("Listen on " + port)
+
+	r.Run(port)
 }
