@@ -7,12 +7,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//	@Summary	Get all books
-//	@ID			get-books
-//	@Tags		books
-//	@Produce	json
-//	@Success	200	{object}	[]models.Book
-//	@Router		/books [get]
+// @Summary	Get all books
+// @ID			get-books
+// @Tags		books
+// @Produce	json
+// @Success	200	{object}	[]models.Book
+// @Router		/books [get]
 func (h handler) GetBooks(c *gin.Context) {
 	var books []models.Book
 
@@ -22,5 +22,4 @@ func (h handler) GetBooks(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, &books)
-
 }

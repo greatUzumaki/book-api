@@ -13,16 +13,16 @@ type AddBookRequestBody struct {
 	Description string `json:"description"`
 }
 
-//	@Summary	Add new book
-//	@ID			add-book
-//	@Tags		books
-//	@Accept		json
-//	@Produce	json
-//	@Param		data	body		AddBookRequestBody	true	"Book data"
-//	@Success	200		{object}	models.Book
-//	@Failure	404		{string}	string	"Not found"
-//	@Failure	400		{string}	string	"Bad Request"
-//	@Router		/books [post]
+// @Summary	Add new book
+// @ID			add-book
+// @Tags		books
+// @Accept		json
+// @Produce		json
+// @Param		data	body		AddBookRequestBody	true	"Book data"
+// @Success	200		{object}	models.Book
+// @Failure	404		{string}	string	"Not found"
+// @Failure	400		{string}	string	"Bad Request"
+// @Router		/books [post]
 func (h handler) AddBook(c *gin.Context) {
 	body := AddBookRequestBody{}
 
@@ -43,5 +43,4 @@ func (h handler) AddBook(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusCreated, &book)
-
 }
